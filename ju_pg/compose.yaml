@@ -1,7 +1,7 @@
 services:
   notebook:
     image: jupyter/scipy-notebook
-    container_name: con-lab
+    container_name: laboc
     
     ports:
       - "8999:8888"
@@ -13,6 +13,7 @@ services:
 
   db:
     image: postgres:latest
+    container_name: pgc
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -22,5 +23,12 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+  adminer:
+    image: adminer
+    container_name: adc
+    restart: always
+    ports:
+      - 8080:8080
 volumes:
   pgdata:

@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:latest
+    image: postgres:15
     container_name: postgres
     ports:
       - 5432:5432
@@ -8,5 +8,10 @@ services:
       - db-store:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=passw0rd
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 volumes:
   db-store:

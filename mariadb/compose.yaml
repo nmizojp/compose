@@ -1,0 +1,38 @@
+services:
+  adminer:
+    container_name: adminer
+    hostname: adminer
+    image: adminer:4.7.5
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  db:
+    container_name: mariadb
+    hostname: mariadb
+    image: mariadb
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=password
+      - MARIADB_DATABASE=sample
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+    
+  labo:
+    image: jupyter/scipy-notebook
+    container_name: laboc
+    
+    ports:
+      - "8999:8888"
+    depends_on:
+      - db
+
+    volumes:
+      - ./work:/home/jovyan/work
+    # 最後にjupyterLabに接続するためのコマンドを実行する。パスワード無し
+    command: start-notebook.sh --NotebookApp.token=''
+  
+    
