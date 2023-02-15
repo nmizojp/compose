@@ -10,6 +10,9 @@ services:
       - ./work:/home/jovyan/work
     # 最後にjupyterLabに接続するためのコマンドを実行する。パスワード無し
     command: start-notebook.sh --NotebookApp.token=''
+    depends_on:
+      - db
+      
 
   db:
     image: postgres:latest
@@ -30,5 +33,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - db
+
 volumes:
   pgdata:
